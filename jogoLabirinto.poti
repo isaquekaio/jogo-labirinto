@@ -1,0 +1,90 @@
+mapa = Matriz.mutavel(12,12," ")
+PAREDE, JOGADOR = "▓", "♞"
+
+var x := aleatório(3, 11)
+var y := aleatório(9, 11)
+var ale := aleatório([2, 3, 4, 5, 6, 7, 8, 9, 10])
+var probabilidade := 0.6
+var jogando := verdadeiro
+
+montar_mapa()
+  para i de 1 até 12 faça
+    mapa[i][1] := PAREDE
+    mapa[i][12] := PAREDE
+    mapa[1][i] := PAREDE
+    mapa[12][i] := PAREDE
+  fim
+  para i de 2 ate mapa.tamanho-2 faça
+    para j de 2 ate mapa.tamanho-2 faça
+      se aleatório() > probabilidade então
+        mapa[i][j] := PAREDE
+      senão
+        mapa[i][j] := " "
+      fim
+    fim
+  fim
+  mapa[1][ale]:= " "
+  mapa[y][x] := JOGADOR
+fim
+
+exibir_mapa()
+  para linha em mapa faça
+    para posicao em linha faça
+      imprima posicao
+    fim
+    escreva ""
+  fim
+fim
+
+mover(novo_x, novo_y : Inteiro)
+  mapa[y][x] := " "
+  se mapa[novo_y][novo_x] <> PAREDE então
+    x := novo_x
+    y := novo_y
+  fim
+  mapa[y][x] := JOGADOR
+fim
+
+mover_direita()
+  mover(x+1, y)
+fim
+
+mover_esquerda()
+  mover(x-1, y)
+fim
+
+mover_cima()
+  mover(x, y-1)
+fim
+
+mover_baixo()
+  mover(x, y+1)
+fim
+
+perguntar_movimento()
+  imprima "Qual direção (wasd): "
+  leia_texto
+fim
+
+atualizar_mapa()
+  letra = perguntar_movimento
+  escolha letra
+    caso "d" => mover_direita
+    caso "a" => mover_esquerda
+    caso "w" => mover_cima
+    caso "s" => mover_baixo
+    caso _   =>
+  fim
+  se y == 1 então
+    jogando := falso
+    escreva"You is winner!!!"
+  fim
+fim
+
+# Programa Principal
+montar_mapa
+exibir_mapa
+enquanto jogando faça
+  atualizar_mapa
+  exibir_mapa
+fim
