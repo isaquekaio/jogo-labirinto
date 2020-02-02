@@ -1,2 +1,3 @@
 # jogo-Labirinto
-Jogo Labirinto em potigol
+
+## Jogo Labirinto na linguagem Potigol
